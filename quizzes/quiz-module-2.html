@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Module 1 — Post-Training Quiz | FIDIC Yellow Book 2017</title>
+<style>
+  :root{
+    --navy:#1E2761; --navy-d:#141B4D; --ice:#CADCFC; --ice-d:#9FB8E8;
+    --warn:#B0281C; --warnbg:#FBEAE8; --good:#2C6E49; --goodbg:#EAF3EC;
+    --amber:#C98A1F; --amberbg:#FDF1D6;
+    --bg:#F6F8FC; --card:#FFFFFF; --text:#1A1F36; --muted:#5B6472;
+    --head-font: Cambria, Georgia, 'Times New Roman', serif;
+    --body-font: Calibri, 'Segoe UI', system-ui, -apple-system, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body-font);}
+  .wrap{max-width:760px;margin:0 auto;padding:18px 16px 60px;}
+  .topbar{background:var(--navy);color:#fff;padding:14px 16px;position:sticky;top:0;z-index:10;box-shadow:0 2px 10px rgba(30,39,97,0.25);}
+  .topbar-inner{max-width:760px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+  .topbar h1{font-family:var(--head-font);font-size:16px;margin:0;line-height:1.25;}
+  .topbar .sub{font-size:11px;color:var(--ice);letter-spacing:1px;text-transform:uppercase;font-weight:bold;}
+  .badge{background:var(--navy-d);border:1px solid var(--ice-d);color:#fff;font-size:12px;padding:5px 10px;border-radius:20px;white-space:nowrap;}
+
+  .card{background:var(--card);border-radius:14px;padding:22px 20px;margin-top:18px;box-shadow:0 3px 14px rgba(30,39,97,0.08);border:1px solid #E4EAF5;}
+
+  /* INTRO */
+  .intro h2{font-family:var(--head-font);color:var(--navy);font-size:24px;margin:0 0 8px;}
+  .intro p{color:var(--muted);line-height:1.55;font-size:14.5px;}
+  .intro .meta{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0;}
+  .pill{background:var(--ice);color:var(--navy);font-weight:bold;font-size:12px;padding:6px 12px;border-radius:20px;}
+  .pill.warnpill{background:var(--warn);color:#fff;}
+  label{display:block;font-weight:bold;font-size:13px;color:var(--navy);margin:18px 0 6px;}
+  input[type=text]{width:100%;padding:12px 14px;border:1.5px solid #D7E0F2;border-radius:10px;font-size:15px;font-family:var(--body-font);background:#FBFCFE;}
+  input[type=text]:focus{outline:2px solid var(--ice-d);border-color:var(--navy);}
+  .hint{font-size:12px;color:var(--muted);margin-top:4px;}
+
+  .btn{display:inline-block;background:var(--navy);color:#fff;border:none;padding:14px 26px;border-radius:10px;font-size:15px;font-weight:bold;font-family:var(--body-font);cursor:pointer;transition:transform .08s ease, background .15s ease;}
+  .btn:hover{background:var(--navy-d);}
+  .btn:active{transform:scale(0.98);}
+  .btn:disabled{background:#B7BFD4;cursor:not-allowed;}
+  .btn-block{width:100%;text-align:center;margin-top:20px;}
+  .btn-outline{background:transparent;color:var(--navy);border:1.5px solid var(--navy);}
+  .btn-outline:hover{background:var(--ice);}
+  .btn-row{display:flex;gap:10px;margin-top:22px;}
+  .btn-row .btn{flex:1;}
+
+  /* PROGRESS */
+  .progress-wrap{margin-top:16px;}
+  .progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:bold;}
+  .progress-track{background:#E4EAF5;height:8px;border-radius:6px;overflow:hidden;}
+  .progress-fill{background:linear-gradient(90deg,var(--navy),var(--ice-d));height:100%;border-radius:6px;transition:width .25s ease;}
+
+  /* QUESTION */
+  .qtag{display:inline-block;background:var(--ice);color:var(--navy);font-size:11px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:12px;}
+  .qtext{font-family:var(--head-font);font-size:19px;line-height:1.4;color:var(--text);margin:0 0 18px;}
+  .option{display:flex;align-items:center;gap:12px;background:#FBFCFE;border:1.5px solid #E1E7F5;border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer;font-size:14.5px;line-height:1.4;transition:all .12s ease;}
+  .option:hover{border-color:var(--ice-d);background:#F2F6FD;}
+  .option.selected{border-color:var(--navy);background:var(--ice);font-weight:bold;}
+  .option .letter{flex:0 0 28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:bold;font-family:var(--body-font);flex-shrink:0;}
+  .option.selected .letter{background:var(--navy-d);}
+  .option.correct{border-color:var(--good);background:var(--goodbg);}
+  .option.correct .letter{background:var(--good);}
+  .option.incorrect{border-color:var(--warn);background:var(--warnbg);}
+  .option.incorrect .letter{background:var(--warn);}
+  .option.locked{cursor:default;}
+  .option .mark{margin-left:auto;font-weight:bold;font-size:16px;flex-shrink:0;}
+
+  .feedback-box{border-radius:12px;padding:16px 16px;margin-top:14px;font-size:13.5px;line-height:1.55;border:1.5px solid;}
+  .feedback-box.correct{background:var(--goodbg);border-color:#A9CBB0;}
+  .feedback-box.incorrect{background:var(--warnbg);border-color:#E8B4AE;}
+  .feedback-head{font-weight:bold;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+  .feedback-box.correct .feedback-head{color:var(--good);}
+  .feedback-box.incorrect .feedback-head{color:var(--warn);}
+  .clause-tag{display:inline-block;background:var(--navy);color:#fff;font-size:11px;font-weight:bold;padding:3px 9px;border-radius:6px;margin-top:8px;}
+
+  /* RESULTS */
+  .score-circle{width:150px;height:150px;border-radius:50%;background:conic-gradient(var(--navy) calc(var(--pct) * 1%), #E4EAF5 0);display:flex;align-items:center;justify-content:center;margin:10px auto 6px;position:relative;}
+  .score-circle::before{content:"";position:absolute;width:118px;height:118px;background:var(--card);border-radius:50%;}
+  .score-circle .num{position:relative;font-family:var(--head-font);font-size:32px;font-weight:bold;color:var(--navy);}
+  .score-sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:6px;}
+
+  .result-banner{border-radius:12px;padding:16px 18px;margin:16px 0;text-align:center;border:1.5px solid;}
+  .result-banner.pass{background:var(--goodbg);border-color:#A9CBB0;}
+  .result-banner.fail{background:var(--warnbg);border-color:#E8B4AE;}
+  .result-banner .headline{font-family:var(--head-font);font-size:19px;font-weight:bold;margin-bottom:4px;}
+  .result-banner.pass .headline{color:var(--good);}
+  .result-banner.fail .headline{color:var(--warn);}
+  .result-banner .sub{font-size:13px;color:var(--text);}
+
+  .topic-row{margin-bottom:14px;}
+  .topic-head{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:5px;}
+  .topic-head .name{font-weight:bold;color:var(--text);}
+  .topic-head .frac{color:var(--muted);}
+  .bar-track{background:#E4EAF5;height:10px;border-radius:6px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:6px;}
+  .bar-fill.high{background:var(--good);}
+  .bar-fill.mid{background:var(--amber);}
+  .bar-fill.low{background:var(--warn);}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin:14px 0 4px;font-size:12px;color:var(--muted);}
+  .legend span{display:inline-flex;align-items:center;gap:5px;}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+
+  .note-box{background:var(--amberbg);border:1px solid #E8CE8A;border-radius:10px;padding:14px 16px;font-size:13px;color:var(--text);margin-top:18px;line-height:1.5;}
+  .footer-note{text-align:center;color:var(--muted);font-size:11.5px;margin-top:24px;}
+
+  /* REVIEW LIST */
+  .review-title{font-family:var(--head-font);color:var(--navy);font-size:19px;margin:26px 0 4px;}
+  .review-sub{color:var(--muted);font-size:13px;margin-bottom:14px;}
+  .review-item{border:1px solid #E4EAF5;border-radius:10px;padding:14px 15px;margin-bottom:10px;background:#FBFCFE;}
+  .review-item .rnum{font-size:11px;font-weight:bold;color:var(--navy);text-transform:uppercase;letter-spacing:0.5px;}
+  .review-item .rq{font-size:14px;font-weight:bold;margin:5px 0 8px;line-height:1.4;}
+  .review-item .rline{font-size:13px;margin:3px 0;}
+  .review-item .rline.wrong{color:var(--warn);}
+  .review-item .rline.right{color:var(--good);}
+  .review-item .rexp{font-size:12.5px;color:var(--muted);margin-top:7px;line-height:1.5;border-top:1px dashed #D7E0F2;padding-top:7px;}
+
+  @media print{
+    .topbar, .btn, .no-print{display:none !important;}
+    body{background:#fff;}
+    .card{box-shadow:none;border:1px solid #ccc;}
+    .review-item{break-inside:avoid;}
+  }
+  @media (max-width:420px){
+    .qtext{font-size:17px;}
+    .score-circle{width:130px;height:130px;}
+    .score-circle::before{width:100px;height:100px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div>
+      <div class="sub">Module 1 &bull; Post-Training Assessment</div>
+      <h1>Foundations &amp; General Provisions</h1>
+    </div>
+    <div class="badge no-print" id="topBadge">28 Questions</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ============ INTRO SCREEN ============ -->
+  <div class="card intro" id="screen-intro">
+    <h2>Post-Training Assessment</h2>
+    <p>This quiz checks whether you can <strong>apply</strong> what was covered — not just recall it.
+    Most questions are scenario-based. As soon as you answer, you'll see whether you were right,
+    the correct answer, and the exact Sub-Clause behind it. Keep this page after finishing —
+    the full answer review at the end is designed as a study reference.</p>
+    <div class="meta">
+      <span class="pill">28 Questions</span>
+      <span class="pill">FIDIC Yellow Book 2017</span>
+      <span class="pill">Clauses 1 &amp; 2</span>
+      <span class="pill warnpill">70% Pass Mark</span>
+    </div>
+    <label for="nameInput">Your name (optional)</label>
+    <input type="text" id="nameInput" placeholder="e.g. Md Karim Ahmed — Site Engineer, PIU">
+    <div class="hint">Leave blank to answer anonymously. Nothing is transmitted anywhere — this stays on your device.</div>
+    <button class="btn btn-block" onclick="startQuiz()">Start Assessment &rarr;</button>
+  </div>
+
+  <!-- ============ QUIZ SCREEN ============ -->
+  <div id="screen-quiz" style="display:none;">
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="progressText">Question 1 of 28</span>
+        <span id="progressPct">4%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:4%;"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="qtag" id="qTag">Definitions</div>
+      <p class="qtext" id="qText">Question text</p>
+      <div id="optionsWrap"></div>
+      <div id="feedbackWrap"></div>
+    </div>
+
+    <div class="btn-row no-print">
+      <button class="btn btn-outline" id="btnPrev" onclick="prevQuestion()">&larr; Back</button>
+      <button class="btn" id="btnNext" onclick="nextQuestion()" disabled>Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- ============ RESULTS SCREEN ============ -->
+  <div class="card" id="screen-results" style="display:none;">
+    <h2 style="font-family:var(--head-font);color:var(--navy);margin-top:0;" id="resultsName">Your Results</h2>
+    <div class="score-circle" id="scoreCircle" style="--pct:0;"><div class="num" id="scoreNum">0/28</div></div>
+    <p class="score-sub" id="scoreSub">You answered 0 of 28 correctly</p>
+
+    <div class="result-banner" id="resultBanner">
+      <div class="headline" id="resultHeadline">&nbsp;</div>
+      <div class="sub" id="resultSub">&nbsp;</div>
+    </div>
+
+    <div class="legend">
+      <span><span class="dot" style="background:var(--good);"></span> Strong (&ge;75%)</span>
+      <span><span class="dot" style="background:var(--amber);"></span> Developing (50&ndash;74%)</span>
+      <span><span class="dot" style="background:var(--warn);"></span> Needs focus (&lt;50%)</span>
+    </div>
+
+    <div id="topicBreakdown" style="margin-top:14px;"></div>
+
+    <div class="note-box" id="trainerNote">
+      <strong>For the trainer:</strong> 70% is the suggested pass mark before advancing this
+      participant to Module 2. Anyone below threshold — especially with low scores concentrated
+      in one or two topics above — should get a short 1:1 review before moving on.
+    </div>
+
+    <div class="btn-row no-print">
+      <button class="btn btn-outline" onclick="window.print()">Print / Save PDF</button>
+      <button class="btn" onclick="location.reload()">Restart</button>
+    </div>
+
+    <h3 class="review-title">Full Answer Review</h3>
+    <p class="review-sub">Keep this section as a study reference — every question, your answer, the correct answer, and why.</p>
+    <div id="reviewList"></div>
+
+    <p class="footer-note">Module 1 &mdash; Foundations &amp; General Provisions &nbsp;|&nbsp; FIDIC Yellow Book 2017, Clauses 1 &amp; 2</p>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// QUESTION BANK — 28 questions, tagged by topic, with full feedback
+// ============================================================
+const PASS_THRESHOLD = 70;
+
+const QUESTIONS = [
+  { topic:"Definitions", q:"The Engineer formally rejects the Contractor's Claim in writing. The Contractor immediately responds that it does not accept the rejection and intends to pursue the matter further. Under Sub-Clause 1.1.29, has a \u201cDispute\u201d arisen?", options:["No \u2014 the Contractor must wait 90 days first","Yes \u2014 the Claim was rejected and the claiming Party has not acquiesced","No \u2014 only the DAAB can formally declare a Dispute","No \u2014 Disputes require the Employer's agreement"], correct:1, exp:"A Dispute under Sub-Clause 1.1.29 arises once (a) a Claim is made, (b) it is rejected in whole or in part, and (c) the claiming Party does not acquiesce. All three conditions are met here \u2014 no waiting period or DAAB declaration is required for the Dispute itself to exist.", clause:"Sub-Clause 1.1.29" },
+  { topic:"Definitions", q:'Which defined term means "expenditure reasonably incurred (or to be incurred)," excluding profit?', options:["Cost Plus Profit","Cost","Contract Price","Accepted Contract Amount"], correct:1, exp:'"Cost" is expenditure reasonably incurred, explicitly excluding profit. "Cost Plus Profit" adds the applicable profit percentage on top \u2014 the two terms are frequently confused in claims.', clause:"Sub-Clause 1.1.19" },
+  { topic:"Definitions", q:'A Contractor wants to price its tender assuming a particular ground condition is "Unforeseeable." Which date determines whether that assumption is legally valid?', options:["The date of discovery on Site","The Base Date (28 days before Tender submission)","The Commencement Date","The date the Contract Agreement is signed"], correct:1, exp:'"Unforeseeable" is measured against what an experienced contractor could reasonably have foreseen by the Base Date \u2014 not at discovery, not at Commencement. This single date-anchor decides most ground-condition disputes.', clause:"Sub-Clauses 1.1.4, 1.1.87" },
+  { topic:"Definitions", q:'Under the Yellow Book, what does "DAAB" stand for?', options:["Dispute Avoidance/Adjudication Board","Dispute and Arbitration Advisory Body","Design and Award Adjudication Bureau","Dispute Assessment and Arbitration Board"], correct:0, exp:"DAAB = Dispute Avoidance/Adjudication Board \u2014 the mandatory first stop for formal Disputes, distinct from arbitration.", clause:"Sub-Clause 1.1.22" },
+  { topic:"Definitions", q:"The Contractor believes it is owed extra payment for work it considers outside its scope. Under Sub-Clause 1.1.5, how is this request formally characterized before any Dispute exists?", options:["A Notice","A Claim","A Variation","A Determination"], correct:1, exp:'A request or assertion for entitlement or relief under the Contract is a "Claim." It only becomes a "Dispute" if rejected and not accepted by the claiming Party.', clause:"Sub-Clause 1.1.5" },
+
+  { topic:"Interpretation", q:"The Engineer reviews a Contractor's temporary works method statement and issues a Notice of No-objection. A failure later occurs on Site. Can the Contractor rely on the Engineer's \u201cNo-objection\u201d to avoid responsibility?", options:["Yes \u2014 No-objection always transfers responsibility to the Engineer","No \u2014 Consent/No-objection does not relieve the Contractor of any duty, obligation, or responsibility","Only if the failure was genuinely unforeseeable","Yes, but only for cost consequences, not safety"], correct:1, exp:'"Consent" is defined narrowly as agreement/permission \u2014 it never transfers responsibility for correctness. The Engineer\u2019s acceptance, approval, or No-objection never relieves the Contractor of its obligations.', clause:"Sub-Clause 1.2" },
+  { topic:"Interpretation", q:'Under Sub-Clause 1.2, the word "shall" means:', options:["Optional","A mandatory obligation","A recommendation only","Subject to the Engineer's discretion"], correct:1, exp:'"Shall" denotes a mandatory obligation the Party or person must perform; "may" (by contrast) denotes a discretionary choice.', clause:"Sub-Clause 1.2(e)-(f)" },
+
+  { topic:"Notices (1.3)", q:"A Party transmits a Notice electronically on Tuesday, using the system stated in the Contract Data, and no non-delivery notification is received. When is the Notice deemed received?", options:["Tuesday, immediately","Wednesday \u2014 the day after transmission","The following Monday","Only once a read-receipt is confirmed"], correct:1, exp:"An electronically transmitted Notice is deemed received the day after transmission, provided the sender receives no non-delivery notification.", clause:"Sub-Clause 1.3" },
+  { topic:"Notices (1.3)", q:'A Contractor gives the Engineer a written communication describing a discrepancy between two Contract documents, but never labels it as a "Notice." What risk does this create?', options:["None \u2014 content matters, not labels","The communication may not be recognized as a valid Notice under Sub-Clause 1.3(b)","It automatically becomes a Variation instruction","The Engineer must still treat it as legally binding regardless"], correct:1, exp:"Sub-Clause 1.3(b) requires that a Notice be identified as such. An unlabeled communication \u2014 however clear its content \u2014 risks failing this formal requirement, with real consequences for time-barred claims.", clause:"Sub-Clause 1.3" },
+  { topic:"Notices (1.3)", q:"Under Sub-Clause 1.3, communications may be delivered by hand, by mail/courier, or by:", options:["Any social media platform","The electronic system(s) stated in the Contract Data (or acceptable to the Engineer if none is stated)","Verbal announcement at a site meeting","Fax only"], correct:1, exp:"Sub-Clause 1.3(a)(ii) specifies electronic transmission systems stated in the Contract Data \u2014 or, if none is stated, a system acceptable to the Engineer. Ad hoc channels like social media or verbal announcements do not qualify.", clause:"Sub-Clause 1.3" },
+  { topic:"Notices (1.3)", q:"The Contractor's registered address for Notices changes, and it sends the Employer formal Notice of the new address. From when do future communications apply to the new address?", options:["Immediately upon sending","After the Employer (the recipient of that Notice) receives it","Automatically after 14 days","Only from the next Payment Certificate onward"], correct:1, exp:"A new address takes effect for future communications only after the other Party receives the Notice of the change \u2014 not from the moment it is sent.", clause:"Sub-Clause 1.3(d)" },
+  { topic:"Notices (1.3)", q:"An Engineer sends a formal rejection of a Contractor's document as an unlabeled attachment within a general project update email. Is this a valid Notice under Sub-Clause 1.3?", options:["Yes \u2014 it came from the Engineer, so it is automatically valid","Likely not \u2014 it was not identified as a Notice","Yes \u2014 because it was in writing","Yes, provided the Contractor opens the email"], correct:1, exp:"Being in writing and coming from the right person is necessary but not sufficient \u2014 Sub-Clause 1.3(b) also requires explicit identification as a Notice. An informal attachment inside a routine update risks failing this test.", clause:"Sub-Clause 1.3" },
+
+  { topic:"Priority of Documents (1.5)", q:"The Schedules and the Contractor's Proposal conflict on a minor technical point. Which ranks higher under Sub-Clause 1.5?", options:["Contractor's Proposal","Schedules","They rank equally","Neither is part of the Contract"], correct:1, exp:"The Sub-Clause 1.5 order places Schedules (h) above the Contractor's Proposal (i). Lower letters always outrank higher ones in a conflict.", clause:"Sub-Clause 1.5" },
+  { topic:"Priority of Documents (1.5)", q:"Two documents conflict: the General Conditions state one payment period, and the Particular Conditions state a shorter one. Which governs?", options:['The General Conditions, as the "default" FIDIC text',"The Particular Conditions \u2014 they rank above the General Conditions","Whichever is more favourable to the Contractor","The Engineer decides case-by-case with no fixed rule"], correct:1, exp:"Particular Conditions (Parts A and B) rank above the General Conditions in the Sub-Clause 1.5 hierarchy \u2014 a frequent surprise, since people often assume the \u201cstandard FIDIC text\u201d is supreme.", clause:"Sub-Clause 1.5" },
+  { topic:"Priority of Documents (1.5)", q:"A Contractor notices that the Employer's Requirements and the Drawings conflict, but says nothing, assuming the Engineer will eventually notice. Is this consistent with the Contractor's obligations under Sub-Clause 1.5?", options:["Yes \u2014 spotting conflicts is solely the Engineer's job","No \u2014 the Contractor has an active duty to give Notice of any ambiguity or discrepancy it finds","Yes, provided the Contractor guesses correctly","No, but there is no consequence for staying silent"], correct:1, exp:"Sub-Clause 1.5's final paragraph places an active duty on whichever Party finds a discrepancy to promptly give Notice to the Engineer \u2014 silence is a missed obligation, not a neutral act.", clause:"Sub-Clause 1.5" },
+  { topic:"Priority of Documents (1.5)", q:"In the Priority of Documents, which ranks lowest?", options:["The Contract Agreement","Any other Contract documents","The Letter of Tender","The Particular Conditions"], correct:1, exp:'"Any other documents forming part of the Contract" is item (k) \u2014 the lowest-ranking category. The Contract Agreement is highest (a).', clause:"Sub-Clause 1.5" },
+
+  { topic:"Law & Language (1.4)", q:"The Contract Data does not state a ruling language. Which language governs interpretation of the Contract by default?", options:["English, always, regardless of the Contract Data","The language of the Conditions of Contract as issued","Whichever Party's native language is used most on Site","There is no default \u2014 the Contract becomes void"], correct:1, exp:"If the Contract Data is silent on the Ruling Language, the Contract defaults to the language of the Conditions (i.e., the language the General Conditions were issued in).", clause:"Sub-Clause 1.4" },
+  { topic:"Law & Language (1.4)", q:'The Contract Data leaves the "governing law" field blank, and a legal dispute arises about interpretation. Which law applies by default?', options:["The law of the Contractor's home country","The law of the Country where the Site is located","Swiss law, since FIDIC is based in Geneva","There is no applicable law"], correct:1, exp:"The Contract defaults to the law of the Country (where the Site, or most of it, is located) if the Contract Data does not state a governing law.", clause:"Sub-Clause 1.4" },
+
+  { topic:"Contract Formation & Liability", q:"40 days have passed since the Contractor received the Letter of Acceptance, and the Contract Agreement still isn't signed, with no alternative agreement between the Parties. Has a deadline been missed?", options:["No such deadline exists","Yes \u2014 Sub-Clause 1.6 requires signature within 35 days unless the Parties agree otherwise","The deadline is 60 days","Only the Employer can be in breach of this deadline"], correct:1, exp:"Sub-Clause 1.6 requires the Parties to sign the Contract Agreement within 35 days of the Contractor receiving the Letter of Acceptance, unless they agree otherwise. At 40 days with no such agreement, the deadline has been missed.", clause:"Sub-Clause 1.6" },
+  { topic:"Contract Formation & Liability", q:"The Contractor is delayed because the Employer has not yet obtained a required zoning permit for the Permanent Works \u2014 a permit the Employer's Requirements did not allocate to the Contractor. What is the likely outcome under Sub-Clause 1.13?", options:["The Contractor bears the delay with no recourse","The Contractor may be entitled to EOT and/or Cost Plus Profit, subject to the Claims procedure","The Engineer must personally obtain the permit","The Contract automatically terminates"], correct:1, exp:"Planning/zoning/building permits for the Permanent Works are generally the Employer's responsibility. A resulting Contractor delay/cost triggers entitlement, subject to following the Claims procedure.", clause:"Sub-Clause 1.13" },
+  { topic:"Contract Formation & Liability", q:"Under Sub-Clause 1.13, who is generally responsible for obtaining the Contractor's own operational permits and paying related taxes, duties, and fees?", options:["The Employer","The Contractor","The Engineer","The DAAB"], correct:1, exp:"The Contractor is responsible for notices, taxes, duties, fees, and other permits/licences needed to execute the Works \u2014 as distinct from the Employer's planning/zoning/building permit duties.", clause:"Sub-Clause 1.13" },
+  { topic:"Contract Formation & Liability", q:"A three-member JV Contractor has one member exit due to insolvency. Can the Employer still pursue the remaining two members for 100% of the Contractor's obligations?", options:["No \u2014 only for their combined percentage share","Yes \u2014 under Sub-Clause 1.14's joint and several liability","No \u2014 the Contract automatically terminates on any member's insolvency","Only after a new tender is run"], correct:1, exp:"Under joint and several liability, the Employer may pursue any one (or more) JV member(s) for the full obligation, regardless of their individual percentage share.", clause:"Sub-Clause 1.14" },
+  { topic:"Contract Formation & Liability", q:"Under Sub-Clause 1.15, which of the following will NOT be limited by the liability cap?", options:["A minor cost overrun","A routine Variation-related cost adjustment","Loss caused by the Contractor's fraud","A standard delay claim"], correct:2, exp:"The cap and exclusions in Sub-Clause 1.15 do not apply in cases of fraud, gross negligence, deliberate default, or reckless misconduct \u2014 these break through any stated limitation entirely.", clause:"Sub-Clause 1.15" },
+  { topic:"Contract Formation & Liability", q:"The Employer wants to claim loss of profit and indirect losses from the Contractor for a minor breach, beyond the specific carve-outs listed in Sub-Clause 1.15. Is this generally permitted?", options:["Yes, always","No \u2014 Sub-Clause 1.15 generally excludes such losses, subject to specific listed carve-outs","Only if the Employer is a government entity","Only with DAAB pre-approval"], correct:1, exp:"Sub-Clause 1.15 excludes loss of use, loss of profit, loss of contract, and indirect/consequential loss for both Parties, except under the specific carve-outs it lists (e.g., Delay Damages, certain Indemnities).", clause:"Sub-Clause 1.15" },
+  { topic:"Contract Formation & Liability", q:"What must a Contractor comprising a Joint Venture do regarding the Contract Agreement, per Sub-Clause 1.6?", options:["Only the JV Leader needs to sign","Every member of the JV must sign","Only one member, chosen at random, needs to sign","No signature is required from JV members"], correct:1, exp:"Sub-Clause 1.6 requires the authorised representative of each member of the JV to sign the Contract Agreement \u2014 not just the Leader.", clause:"Sub-Clause 1.6" },
+
+  { topic:"The Employer (Cl.2)", q:"The Contract Data does not state a specific time for giving the Contractor access to the Site. What standard applies instead, under Sub-Clause 2.1?", options:["No access obligation exists at all","Access within such times as required to enable the Contractor to follow the Programme","Access only after Taking-Over","Access is entirely at the Employer's discretion, with no fallback standard"], correct:1, exp:"If no time is stated in the Contract Data, Sub-Clause 2.1 falls back to requiring access within times needed for the Contractor to proceed per the Programme (or the initial programme, if none exists yet).", clause:"Sub-Clause 2.1" },
+  { topic:"The Employer (Cl.2)", q:"The Employer possesses a geotechnical report showing adverse sub-surface conditions but does not share it with the Contractor before the Base Date. The Contractor later encounters those exact conditions. How does Sub-Clause 2.5 affect this situation?", options:["It has no effect \u2014 the Contractor bears all ground risk regardless","The Employer's failure to share known relevant data may strengthen the Contractor's Unforeseeable Physical Conditions position","It only matters if the Contractor specifically requested the report in writing","Sub-Clause 2.5 only concerns climatic data"], correct:1, exp:"The Employer must share relevant Site data in its possession before the Base Date. Undisclosed data the Employer held directly affects what a Contractor could reasonably have foreseen \u2014 strengthening a later Unforeseeable Physical Conditions claim.", clause:"Sub-Clauses 2.5, 1.1.87" },
+  { topic:"The Employer (Cl.2)", q:"The Contractor notices signs that the Employer may be in financial difficulty and has received no formal Notice about it. What can the Contractor request under Sub-Clause 2.4?", options:["Immediate termination of the Contract","Reasonable evidence that financing arrangements are in place, within 28 days","A change of Engineer","Nothing \u2014 the Contractor must simply continue regardless"], correct:1, exp:"Sub-Clause 2.4 entitles the Contractor to request evidence of the Employer's financial arrangements upon becoming aware of an un-notified material change \u2014 the Employer must respond within 28 days.", clause:"Sub-Clause 2.4" },
+];
+
+// ============================================================
+// ENGINE
+// ============================================================
+let current = 0;
+let answers = new Array(QUESTIONS.length).fill(null); // selected index, or null
+let userName = "";
+
+function startQuiz(){
+  userName = document.getElementById('nameInput').value.trim();
+  document.getElementById('screen-intro').style.display = 'none';
+  document.getElementById('screen-quiz').style.display = 'block';
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const item = QUESTIONS[current];
+  const answered = answers[current] !== null;
+
+  document.getElementById('qTag').textContent = item.topic;
+  document.getElementById('qText').textContent = (current+1) + ". " + item.q;
+  document.getElementById('progressText').textContent = "Question " + (current+1) + " of " + QUESTIONS.length;
+  const pct = Math.round(((current+1)/QUESTIONS.length)*100);
+  document.getElementById('progressPct').textContent = pct + "%";
+  document.getElementById('progressFill').style.width = pct + "%";
+
+  const wrap = document.getElementById('optionsWrap');
+  wrap.innerHTML = "";
+  const letters = ["A","B","C","D"];
+  item.options.forEach((opt, idx) => {
+    const div = document.createElement('div');
+    let cls = 'option';
+    if(answered){
+      cls += ' locked';
+      if(idx === item.correct) cls += ' correct';
+      else if(idx === answers[current]) cls += ' incorrect';
+    } else if(answers[current] === idx){
+      cls += ' selected';
+    }
+    div.className = cls;
+    let mark = '';
+    if(answered && idx === item.correct) mark = '<span class="mark">&#10003;</span>';
+    else if(answered && idx === answers[current]) mark = '<span class="mark">&#10007;</span>';
+    div.innerHTML = '<span class="letter">' + letters[idx] + '</span><span>' + opt + '</span>' + mark;
+    if(!answered){ div.onclick = () => selectOption(idx); }
+    wrap.appendChild(div);
+  });
+
+  const fbWrap = document.getElementById('feedbackWrap');
+  fbWrap.innerHTML = "";
+  if(answered){
+    const isCorrect = answers[current] === item.correct;
+    const box = document.createElement('div');
+    box.className = 'feedback-box ' + (isCorrect ? 'correct' : 'incorrect');
+    box.innerHTML = '<div class="feedback-head">' + (isCorrect ? '\u2713 Correct' : '\u2717 Not quite') + '</div>' +
+                     '<div>' + item.exp + '</div>' +
+                     '<span class="clause-tag">' + item.clause + '</span>';
+    fbWrap.appendChild(box);
+  }
+
+  document.getElementById('btnPrev').style.visibility = current === 0 ? 'hidden' : 'visible';
+  document.getElementById('btnNext').disabled = !answered;
+  document.getElementById('btnNext').textContent = current === QUESTIONS.length - 1 ? 'Finish \u2192' : 'Next \u2192';
+}
+
+function selectOption(idx){
+  if(answers[current] !== null) return; // already locked
+  answers[current] = idx;
+  renderQuestion();
+}
+
+function nextQuestion(){
+  if(answers[current] === null) return;
+  if(current === QUESTIONS.length - 1){
+    showResults();
+  } else {
+    current++;
+    renderQuestion();
+  }
+}
+
+function prevQuestion(){
+  if(current === 0) return;
+  current--;
+  renderQuestion();
+}
+
+function showResults(){
+  document.getElementById('screen-quiz').style.display = 'none';
+  const resultsScreen = document.getElementById('screen-results');
+  resultsScreen.style.display = 'block';
+
+  let correctCount = 0;
+  const topicStats = {};
+  QUESTIONS.forEach((item, i) => {
+    if(!topicStats[item.topic]) topicStats[item.topic] = {correct:0, total:0};
+    topicStats[item.topic].total++;
+    if(answers[i] === item.correct){
+      correctCount++;
+      topicStats[item.topic].correct++;
+    }
+  });
+
+  const pct = Math.round((correctCount / QUESTIONS.length) * 100);
+  document.getElementById('resultsName').textContent = userName ? userName + "\u2019s Results" : "Your Results";
+  document.getElementById('scoreCircle').style.setProperty('--pct', pct);
+  document.getElementById('scoreNum').textContent = correctCount + "/" + QUESTIONS.length;
+  document.getElementById('scoreSub').textContent = "You answered " + correctCount + " of " + QUESTIONS.length + " correctly (" + pct + "%)";
+
+  const banner = document.getElementById('resultBanner');
+  const headline = document.getElementById('resultHeadline');
+  const sub = document.getElementById('resultSub');
+  if(pct >= PASS_THRESHOLD){
+    banner.className = 'result-banner pass';
+    headline.textContent = '\u2713 PASS \u2014 Ready for Module 2';
+    sub.textContent = 'Score of ' + pct + '% meets the ' + PASS_THRESHOLD + '% threshold for this module.';
+  } else {
+    banner.className = 'result-banner fail';
+    headline.textContent = '\u26A0 BELOW PASS THRESHOLD';
+    sub.textContent = 'Score of ' + pct + '% is below the ' + PASS_THRESHOLD + '% threshold. Flagged for a short 1:1 review before advancing to Module 2.';
+  }
+
+  const breakdown = document.getElementById('topicBreakdown');
+  breakdown.innerHTML = "";
+  Object.keys(topicStats).forEach(topic => {
+    const s = topicStats[topic];
+    const tpct = Math.round((s.correct / s.total) * 100);
+    const cls = tpct >= 75 ? 'high' : (tpct >= 50 ? 'mid' : 'low');
+    const row = document.createElement('div');
+    row.className = 'topic-row';
+    row.innerHTML = `
+      <div class="topic-head">
+        <span class="name">${topic}</span>
+        <span class="frac">${s.correct}/${s.total} (${tpct}%)</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill ${cls}" style="width:${tpct}%;"></div></div>
+    `;
+    breakdown.appendChild(row);
+  });
+
+  const reviewList = document.getElementById('reviewList');
+  reviewList.innerHTML = "";
+  const letters = ["A","B","C","D"];
+  QUESTIONS.forEach((item, i) => {
+    const isCorrect = answers[i] === item.correct;
+    const div = document.createElement('div');
+    div.className = 'review-item';
+    div.innerHTML = `
+      <div class="rnum">Q${i+1} &bull; ${item.topic}</div>
+      <div class="rq">${item.q}</div>
+      <div class="rline ${isCorrect ? 'right' : 'wrong'}">Your answer: ${letters[answers[i]]}. ${item.options[answers[i]]} ${isCorrect ? '(correct)' : '(incorrect)'}</div>
+      ${!isCorrect ? '<div class="rline right">Correct answer: ' + letters[item.correct] + '. ' + item.options[item.correct] + '</div>' : ''}
+      <div class="rexp">${item.exp} <span class="clause-tag">${item.clause}</span></div>
+    `;
+    reviewList.appendChild(div);
+  });
+}
+</script>
+</body>
+</html>

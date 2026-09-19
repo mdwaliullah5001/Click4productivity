@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Module 1 — Pre-Training Quiz | FIDIC Yellow Book 2017</title>
+<style>
+  :root{
+    --navy:#1E2761; --navy-d:#141B4D; --ice:#CADCFC; --ice-d:#9FB8E8;
+    --warn:#B0281C; --warnbg:#FBEAE8; --good:#2C6E49; --goodbg:#EAF3EC;
+    --amber:#C98A1F; --amberbg:#FDF1D6;
+    --bg:#F6F8FC; --card:#FFFFFF; --text:#1A1F36; --muted:#5B6472;
+    --head-font: Cambria, Georgia, 'Times New Roman', serif;
+    --body-font: Calibri, 'Segoe UI', system-ui, -apple-system, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body-font);}
+  .wrap{max-width:760px;margin:0 auto;padding:18px 16px 60px;}
+  .topbar{background:var(--navy);color:#fff;padding:14px 16px;position:sticky;top:0;z-index:10;box-shadow:0 2px 10px rgba(30,39,97,0.25);}
+  .topbar-inner{max-width:760px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+  .topbar h1{font-family:var(--head-font);font-size:16px;margin:0;line-height:1.25;}
+  .topbar .sub{font-size:11px;color:var(--ice);letter-spacing:1px;text-transform:uppercase;font-weight:bold;}
+  .badge{background:var(--navy-d);border:1px solid var(--ice-d);color:#fff;font-size:12px;padding:5px 10px;border-radius:20px;white-space:nowrap;}
+
+  .card{background:var(--card);border-radius:14px;padding:22px 20px;margin-top:18px;box-shadow:0 3px 14px rgba(30,39,97,0.08);border:1px solid #E4EAF5;}
+
+  /* INTRO */
+  .intro h2{font-family:var(--head-font);color:var(--navy);font-size:24px;margin:0 0 8px;}
+  .intro p{color:var(--muted);line-height:1.55;font-size:14.5px;}
+  .intro .meta{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0;}
+  .pill{background:var(--ice);color:var(--navy);font-weight:bold;font-size:12px;padding:6px 12px;border-radius:20px;}
+  label{display:block;font-weight:bold;font-size:13px;color:var(--navy);margin:18px 0 6px;}
+  input[type=text]{width:100%;padding:12px 14px;border:1.5px solid #D7E0F2;border-radius:10px;font-size:15px;font-family:var(--body-font);background:#FBFCFE;}
+  input[type=text]:focus{outline:2px solid var(--ice-d);border-color:var(--navy);}
+  .hint{font-size:12px;color:var(--muted);margin-top:4px;}
+
+  .btn{display:inline-block;background:var(--navy);color:#fff;border:none;padding:14px 26px;border-radius:10px;font-size:15px;font-weight:bold;font-family:var(--body-font);cursor:pointer;transition:transform .08s ease, background .15s ease;}
+  .btn:hover{background:var(--navy-d);}
+  .btn:active{transform:scale(0.98);}
+  .btn:disabled{background:#B7BFD4;cursor:not-allowed;}
+  .btn-block{width:100%;text-align:center;margin-top:20px;}
+  .btn-outline{background:transparent;color:var(--navy);border:1.5px solid var(--navy);}
+  .btn-outline:hover{background:var(--ice);}
+  .btn-row{display:flex;gap:10px;margin-top:22px;}
+  .btn-row .btn{flex:1;}
+
+  /* PROGRESS */
+  .progress-wrap{margin-top:16px;}
+  .progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:bold;}
+  .progress-track{background:#E4EAF5;height:8px;border-radius:6px;overflow:hidden;}
+  .progress-fill{background:linear-gradient(90deg,var(--navy),var(--ice-d));height:100%;border-radius:6px;transition:width .25s ease;}
+
+  /* QUESTION */
+  .qtag{display:inline-block;background:var(--ice);color:var(--navy);font-size:11px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:12px;}
+  .qtext{font-family:var(--head-font);font-size:19px;line-height:1.4;color:var(--text);margin:0 0 18px;}
+  .option{display:flex;align-items:center;gap:12px;background:#FBFCFE;border:1.5px solid #E1E7F5;border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer;font-size:14.5px;line-height:1.4;transition:all .12s ease;}
+  .option:hover{border-color:var(--ice-d);background:#F2F6FD;}
+  .option.selected{border-color:var(--navy);background:var(--ice);font-weight:bold;}
+  .option .letter{flex:0 0 28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:bold;font-family:var(--body-font);}
+  .option.selected .letter{background:var(--navy-d);}
+
+  /* RESULTS */
+  .score-circle{width:150px;height:150px;border-radius:50%;background:conic-gradient(var(--navy) calc(var(--pct) * 1%), #E4EAF5 0);display:flex;align-items:center;justify-content:center;margin:10px auto 6px;position:relative;}
+  .score-circle::before{content:"";position:absolute;width:118px;height:118px;background:var(--card);border-radius:50%;}
+  .score-circle .num{position:relative;font-family:var(--head-font);font-size:32px;font-weight:bold;color:var(--navy);}
+  .score-sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:6px;}
+  .topic-row{margin-bottom:14px;}
+  .topic-head{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:5px;}
+  .topic-head .name{font-weight:bold;color:var(--text);}
+  .topic-head .frac{color:var(--muted);}
+  .bar-track{background:#E4EAF5;height:10px;border-radius:6px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:6px;}
+  .bar-fill.high{background:var(--good);}
+  .bar-fill.mid{background:var(--amber);}
+  .bar-fill.low{background:var(--warn);}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin:14px 0 4px;font-size:12px;color:var(--muted);}
+  .legend span{display:inline-flex;align-items:center;gap:5px;}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+
+  .note-box{background:var(--amberbg);border:1px solid #E8CE8A;border-radius:10px;padding:14px 16px;font-size:13px;color:var(--text);margin-top:18px;line-height:1.5;}
+  .footer-note{text-align:center;color:var(--muted);font-size:11.5px;margin-top:24px;}
+
+  @media print{
+    .topbar, .btn, .no-print{display:none !important;}
+    body{background:#fff;}
+    .card{box-shadow:none;border:1px solid #ccc;}
+  }
+  @media (max-width:420px){
+    .qtext{font-size:17px;}
+    .score-circle{width:130px;height:130px;}
+    .score-circle::before{width:100px;height:100px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div>
+      <div class="sub">Module 1 &bull; Pre-Training Fun Powered by DPD (S&T)</div>
+      <h1>Foundations &amp; General Provisions</h1>
+    </div>
+    <div class="badge no-print" id="topBadge">28 Questions</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ============ INTRO SCREEN ============ -->
+  <div class="card intro" id="screen-intro">
+    <h2>Pre-Training Baseline Quiz</h2>
+    <p>This is a <strong>Fun Powered by DPD (S&T)</strong>, Let's Try Together <strong>no scoring feedback per question</strong> —
+    just answer and move on. Your results appear only at the end.</p>
+    <div class="meta">
+      <span class="pill">28 Questions</span>
+      <span class="pill">FIDIC Yellow Book 2017</span>
+      <span class="pill">Clauses 1 &amp; 2</span>
+      <span class="pill">~15 minutes</span>
+    </div>
+    <label for="nameInput">Your name (optional)</label>
+    <input type="text" id="nameInput" placeholder="e.g. Md Shuvo Ahmed — Assitant Engineer">
+    <div class="hint">Leave blank to answer anonymously. Nothing is transmitted anywhere — this stays on your device.</div>
+    <button class="btn btn-block" onclick="startQuiz()"> 🙂 Start Faun 🙂 &rarr;</button>
+  </div>
+
+  <!-- ============ QUIZ SCREEN ============ -->
+  <div id="screen-quiz" style="display:none;">
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="progressText">Question 1 of 28</span>
+        <span id="progressPct">4%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:4%;"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="qtag" id="qTag">Definitions</div>
+      <p class="qtext" id="qText">Question text</p>
+      <div id="optionsWrap"></div>
+    </div>
+
+    <div class="btn-row no-print">
+      <button class="btn btn-outline" id="btnPrev" onclick="prevQuestion()">&larr; Back</button>
+      <button class="btn" id="btnNext" onclick="nextQuestion()" disabled>Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- ============ RESULTS SCREEN ============ -->
+  <div class="card" id="screen-results" style="display:none;">
+    <h2 style="font-family:var(--head-font);color:var(--navy);margin-top:0;" id="resultsName">Your Results</h2>
+    <div class="score-circle" id="scoreCircle" style="--pct:0;"><div class="num" id="scoreNum">0/28</div></div>
+    <p class="score-sub" id="scoreSub">You answered 0 of 28 correctly</p>
+
+    <div class="legend">
+      <span><span class="dot" style="background:var(--good);"></span> Strong (&ge;75%)</span>
+      <span><span class="dot" style="background:var(--amber);"></span> Developing (50&ndash;74%)</span>
+      <span><span class="dot" style="background:var(--warn);"></span> Needs focus (&lt;50%)</span>
+    </div>
+
+    <div id="topicBreakdown" style="margin-top:14px;"></div>
+
+    <div class="note-box">
+      <strong>Attention Please:</strong> this baseline is diagnostic only — there is no pass/fail here.
+      This feedback will me tune the training contents
+    </div>
+
+    <div class="btn-row no-print">
+      <button class="btn btn-outline" onclick="window.print()">Print / Save PDF</button>
+      <button class="btn" onclick="location.reload()">Restart</button>
+    </div>
+    <p class="footer-note">Module 1 &mdash; Foundations &amp; General Provisions &nbsp;|&nbsp; FIDIC Yellow Book 2017, Clauses 1 &amp; 2</p>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// QUESTION BANK — 28 questions, tagged by topic
+// ============================================================
+const QUESTIONS = [
+  { topic:"Definitions", q:'Under Sub-Clause 1.1.19, what does "Cost" specifically EXCLUDE?', options:["Overheads","Taxes","Profit","Materials"], correct:2 },
+  { topic:"Definitions", q:'The "Base Date" is defined as how many days before the latest date for submission of the Tender?', options:["14 days","21 days","28 days","42 days"], correct:2 },
+  { topic:"Definitions", q:"A Contractor submits a request for extra payment it believes it is owed. Under Sub-Clause 1.1.5, this is best described as a:", options:["Variation","Claim","Dispute","Notice of Dissatisfaction"], correct:1 },
+  { topic:"Definitions", q:'For a situation to qualify as a "Dispute" under Sub-Clause 1.1.29, which must occur?', options:["The Parties must simply disagree privately","A Claim must be rejected (or ignored) AND the claiming Party must not acquiesce","The DAAB must already be constituted","90 days must have passed since the Claim"], correct:1 },
+  { topic:"Definitions", q:'"Unforeseeable" means not reasonably foreseeable by an experienced contractor by which reference point?', options:["The Commencement Date","The Base Date","The date of the Notice","The Tender submission date"], correct:1 },
+  { topic:"Definitions", q:'Which term is defined as "any change to the Works, which is instructed as a variation under Clause 13"?', options:["Claim","Notice","Variation","Contractor's Document"], correct:2 },
+  { topic:"Interpretation", q:'Under Sub-Clause 1.2, what does "Consent" mean?', options:["The Engineer approves and takes responsibility for correctness","The Employer, Contractor, or Engineer agrees to, or gives permission for, the requested matter","Automatic approval after 7 days of silence","A formal Variation instruction"], correct:1 },
+  { topic:"Interpretation", q:"The Engineer gives Consent to a Contractor's proposed construction method. What is the effect on the Contractor's responsibility for that method?", options:["Fully relieves the Contractor of responsibility","Does not relieve the Contractor of any duty, obligation, or responsibility","Transfers responsibility to the Employer","Voids that part of the Contract"], correct:1 },
+  { topic:"Notices (1.3)", q:"Under Sub-Clause 1.3, alongside being in writing and identified as a Notice, a valid Notice must also be:", options:["Sent by registered post only","Delivered/sent to the address stated in the Contract Data, via an approved method","Pre-approved by the Engineer before sending","Copied to the DAAB"], correct:1 },
+  { topic:"Notices (1.3)", q:"An electronically transmitted Notice is deemed received:", options:["Immediately upon sending","The day after transmission (absent a non-delivery notification)","Only once read-receipt is confirmed","After 7 days"], correct:1 },
+  { topic:"Notices (1.3)", q:"A Contractor sends a Notice of Claim via SMS to the Engineer's personal mobile number — a method not stated in the Contract Data. What is the status of this communication?", options:["Valid, because it reached the Engineer","Valid, because SMS is always acceptable under FIDIC","Invalid — it did not follow a transmission method stated in the Contract Data","Valid only if the Engineer replies"], correct:2 },
+  { topic:"Notices (1.3)", q:"If a Party gives Notice of a new communications address, when do future Notices apply to that new address?", options:["Immediately upon sending","After the sender receives that Notice","After a fixed 28-day period","Only after Engineer's approval"], correct:1 },
+  { topic:"Notices (1.3)", q:'Which of these communications risks losing its formal legal effect if it fails to state that it is a "Notice"?', options:["A monthly progress report","An informal message referencing a possible future claim","A routine Payment Certificate","General site meeting minutes"], correct:1 },
+  { topic:"Notices (1.3)", q:"Under Sub-Clause 1.3, all Notices and other communications shall not be:", options:["Copied to the DAAB","Unreasonably withheld or delayed","Sent electronically","Longer than one page"], correct:1 },
+  { topic:"Priority of Documents (1.5)", q:"Under Sub-Clause 1.5, which ranks HIGHER: the Particular Conditions or the General Conditions?", options:["General Conditions","Particular Conditions","They rank equally","Neither — the Employer's Requirements always control"], correct:1 },
+  { topic:"Priority of Documents (1.5)", q:"The Employer's Requirements state one technical specification; the Particular Conditions Part B state a conflicting one. Which prevails?", options:["Employer's Requirements","Particular Conditions Part B","Whichever was issued last in time","The Contractor's Proposal"], correct:1 },
+  { topic:"Priority of Documents (1.5)", q:"If a Party finds an ambiguity or discrepancy between Contract documents, what must that Party do?", options:["Ignore it if it seems minor","Promptly give a Notice to the Engineer describing it","Proceed using its own interpretation","Wait for the other Party to notice it first"], correct:1 },
+  { topic:"Priority of Documents (1.5)", q:"Where does the Contract Agreement rank in the Priority of Documents list?", options:["Lowest","Highest","Same rank as the Letter of Tender","It is not part of the list"], correct:1 },
+  { topic:"Law & Language (1.4)", q:"If the Contract Data does not state a governing law, what applies by default?", options:["English law","The law of the Country","FIDIC's own model law (Swiss)","No law applies"], correct:1 },
+  { topic:"Law & Language (1.4)", q:"The Contract exists in two language versions and a conflict arises between them. Which version prevails?", options:["Whichever was translated first","The version in the Ruling Language stated in the Contract Data","The English version, always","Whichever version the Contractor prefers"], correct:1 },
+  { topic:"Contract Formation & Liability", q:"Within how many days after the Contractor receives the Letter of Acceptance must the Parties sign the Contract Agreement (unless otherwise agreed)?", options:["14 days","21 days","28 days","35 days"], correct:3 },
+  { topic:"Contract Formation & Liability", q:"Under Sub-Clause 1.13, who is generally responsible for obtaining planning, zoning, and building permits for the Permanent Works?", options:["The Contractor","The Employer","The Engineer","The DAAB"], correct:1 },
+  { topic:"Contract Formation & Liability", q:"A JV Contractor has three members. One member becomes insolvent. Under Sub-Clause 1.14, what happens to the remaining members' liability?", options:["Reduced proportionally to their share","Remains fully liable for 100% of the Contractor's obligations","Extinguished entirely","Transferred automatically to the Employer"], correct:1 },
+  { topic:"Contract Formation & Liability", q:"Under Sub-Clause 1.15, if no sum is stated in the Contract Data, what is the Contractor's total liability to the Employer capped at?", options:["Zero","The Accepted Contract Amount","Twice the Accepted Contract Amount","There is no cap"], correct:1 },
+  { topic:"Contract Formation & Liability", q:"Under Sub-Clause 1.15, in which situation does the liability cap NOT apply?", options:["An ordinary delay","A routine Variation dispute","Fraud or gross negligence","A minor Notice defect"], correct:2 },
+  { topic:"The Employer (Cl.2)", q:"Under Sub-Clause 2.1, when must the Employer give the Contractor right of access to the Site?", options:["Immediately upon signing, always","Within the time(s) stated in the Contract Data","Only after the Performance Security is returned","There is no defined obligation"], correct:1 },
+  { topic:"The Employer (Cl.2)", q:"Under Sub-Clause 2.5, the Employer must provide relevant Site data in its possession to the Contractor by when?", options:["Before the Base Date","Before the Commencement Date","Before Taking-Over","There is no deadline"], correct:0 },
+  { topic:"The Employer (Cl.2)", q:"Under Sub-Clause 2.4, if the Contractor becomes aware of an un-notified material change in the Employer's financial arrangements, what can it request?", options:["Immediate termination of the Contract","Reasonable evidence that financial arrangements are in place","Appointment of a new Engineer","An automatic Variation"], correct:1 },
+];
+
+// ============================================================
+// ENGINE
+// ============================================================
+let current = 0;
+let answers = new Array(QUESTIONS.length).fill(null);
+let userName = "";
+
+function startQuiz(){
+  userName = document.getElementById('nameInput').value.trim();
+  document.getElementById('screen-intro').style.display = 'none';
+  document.getElementById('screen-quiz').style.display = 'block';
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const item = QUESTIONS[current];
+  document.getElementById('qTag').textContent = item.topic;
+  document.getElementById('qText').textContent = (current+1) + ". " + item.q;
+  document.getElementById('progressText').textContent = "Question " + (current+1) + " of " + QUESTIONS.length;
+  const pct = Math.round(((current+1)/QUESTIONS.length)*100);
+  document.getElementById('progressPct').textContent = pct + "%";
+  document.getElementById('progressFill').style.width = pct + "%";
+
+  const wrap = document.getElementById('optionsWrap');
+  wrap.innerHTML = "";
+  const letters = ["A","B","C","D"];
+  item.options.forEach((opt, idx) => {
+    const div = document.createElement('div');
+    div.className = 'option' + (answers[current] === idx ? ' selected' : '');
+    div.innerHTML = '<span class="letter">' + letters[idx] + '</span><span>' + opt + '</span>';
+    div.onclick = () => selectOption(idx);
+    wrap.appendChild(div);
+  });
+
+  document.getElementById('btnPrev').style.visibility = current === 0 ? 'hidden' : 'visible';
+  document.getElementById('btnNext').disabled = answers[current] === null;
+  document.getElementById('btnNext').textContent = current === QUESTIONS.length - 1 ? 'Finish \u2192' : 'Next \u2192';
+}
+
+function selectOption(idx){
+  answers[current] = idx;
+  renderQuestion();
+}
+
+function nextQuestion(){
+  if(answers[current] === null) return;
+  if(current === QUESTIONS.length - 1){
+    showResults();
+  } else {
+    current++;
+    renderQuestion();
+  }
+}
+
+function prevQuestion(){
+  if(current === 0) return;
+  current--;
+  renderQuestion();
+}
+
+function showResults(){
+  document.getElementById('screen-quiz').style.display = 'none';
+  const resultsScreen = document.getElementById('screen-results');
+  resultsScreen.style.display = 'block';
+
+  let correctCount = 0;
+  const topicStats = {};
+  QUESTIONS.forEach((item, i) => {
+    if(!topicStats[item.topic]) topicStats[item.topic] = {correct:0, total:0};
+    topicStats[item.topic].total++;
+    if(answers[i] === item.correct){
+      correctCount++;
+      topicStats[item.topic].correct++;
+    }
+  });
+
+  const pct = Math.round((correctCount / QUESTIONS.length) * 100);
+  document.getElementById('resultsName').textContent = userName ? userName + "\u2019s Results" : "Your Results";
+  document.getElementById('scoreCircle').style.setProperty('--pct', pct);
+  document.getElementById('scoreNum').textContent = correctCount + "/" + QUESTIONS.length;
+  document.getElementById('scoreSub').textContent = "You answered " + correctCount + " of " + QUESTIONS.length + " correctly (" + pct + "%)";
+
+  const breakdown = document.getElementById('topicBreakdown');
+  breakdown.innerHTML = "";
+  Object.keys(topicStats).forEach(topic => {
+    const s = topicStats[topic];
+    const tpct = Math.round((s.correct / s.total) * 100);
+    const cls = tpct >= 75 ? 'high' : (tpct >= 50 ? 'mid' : 'low');
+    const row = document.createElement('div');
+    row.className = 'topic-row';
+    row.innerHTML = `
+      <div class="topic-head">
+        <span class="name">${topic}</span>
+        <span class="frac">${s.correct}/${s.total} (${tpct}%)</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill ${cls}" style="width:${tpct}%;"></div></div>
+    `;
+    breakdown.appendChild(row);
+  });
+}
+</script>
+</body>
+</html>
