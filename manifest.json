@@ -1,0 +1,26 @@
+{
+  "name": "FIDIC eLearning Hub",
+  "short_name": "FIDIC eLearning",
+  "description": "FIDIC Contract Management eLearning Platform — Practical training for contract management professionals",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F0F4F8",
+  "theme_color": "#1a8a4a",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
