@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIDIC eLearning · Contract Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1a8a4a">
+<link rel="icon" href="images/icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ============ TOP NAV ============ -->
+  <nav class="topnav">
+    <a href="index.html" class="topnav-brand">
+      <i class="fas fa-file-signature"></i>
+      <span>FIDIC eLearning</span>
+    </a>
+    <div class="topnav-center">
+      <img src="images/admin.jpg" alt="Admin"
+           onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=ffffff&color=1a8a4a&size=80'">
+      <span>Admin</span>
+    </div>
+    <div class="topnav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="#course">Course</a>
+      <a href="#resource">Resource</a>
+      <a href="about.html">About</a>
+    </div>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-medal">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 30 70 L 25 95 L 35 90 L 42 98 L 48 75 Z" fill="#7C3AED" stroke="#4C1D95" stroke-width="1"/>
+          <path d="M 70 70 L 75 95 L 65 90 L 58 98 L 52 75 Z" fill="#7C3AED" stroke="#4C1D95" stroke-width="1"/>
+          <circle cx="50" cy="45" r="32" fill="#FCD34D" stroke="#D97706" stroke-width="2"/>
+          <circle cx="50" cy="45" r="26" fill="#FBBF24" stroke="#B45309" stroke-width="1.5"/>
+          <path d="M 50 28 L 54.5 39 L 66 40 L 57 48 L 60 60 L 50 53 L 40 60 L 43 48 L 34 40 L 45.5 39 Z"
+                fill="#fff" stroke="#D97706" stroke-width="1" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="hero-text">
+        <h1>FIDIC Contract Management Course</h1>
+        <p>Build practical capability in FIDIC, PPA 2006, and PPR 2008</p>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-box">
+        <div class="num" id="statModules">10</div>
+        <div class="lbl">Learning<br>Modules</div>
+      </div>
+      <div class="stat-box">
+        <div class="num" id="statSlides">—</div>
+        <div class="lbl">Active<br>Slides</div>
+      </div>
+      <div class="stat-box">
+        <div class="num" id="statQuizzes">10</div>
+        <div class="lbl">Quiz<br>Sets</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">1</div>
+        <div class="lbl">Learning<br>Track</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+    <div class="dash-header">
+      <div class="dash-left">
+        <div class="dash-icon"><i class="fas fa-book-open-reader"></i></div>
+        <div class="dash-text">
+          <h2>Course Dashboard</h2>
+          <p>Browse FIDIC Pathway</p>
+        </div>
+      </div>
+      <div class="dash-illustration">
+        <svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="100" cy="88" rx="70" ry="6" fill="#DBEAFE" opacity="0.5"/>
+          <rect x="30" y="55" width="28" height="35" rx="2" fill="#93C5FD"/>
+          <rect x="34" y="50" width="28" height="35" rx="2" fill="#60A5FA"/>
+          <rect x="38" y="45" width="28" height="35" rx="2" fill="#3B82F6"/>
+          <line x1="42" y1="52" x2="60" y2="52" stroke="#fff" stroke-width="1.5"/>
+          <line x1="42" y1="57" x2="58" y2="57" stroke="#fff" stroke-width="1.5"/>
+          <line x1="42" y1="62" x2="55" y2="62" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="95" cy="35" r="8" fill="#FBBF24"/>
+          <path d="M 82 55 Q 95 42 108 55 L 108 85 L 82 85 Z" fill="#2563EB"/>
+          <circle cx="140" cy="38" r="8" fill="#FBBF24"/>
+          <path d="M 128 58 Q 140 45 152 58 L 152 85 L 128 85 Z" fill="#1E293B"/>
+          <rect x="125" y="70" width="30" height="2" fill="#0F172A"/>
+          <rect x="128" y="62" width="24" height="8" fill="#475569" rx="1"/>
+          <rect x="170" y="70" width="3" height="15" fill="#78350F"/>
+          <circle cx="171" cy="65" r="10" fill="#10B981"/>
+          <circle cx="177" cy="68" r="8" fill="#059669"/>
+        </svg>
+      </div>
+    </div>
+    <div class="pathway" id="pathway"></div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <span><i class="fas fa-handshake"></i> Better Contracts</span>
+    <span><i class="fas fa-project-diagram"></i> Better Projects</span>
+    <span><i class="fas fa-seedling"></i> Stronger Tomorrow</span>
+  </footer>
+
+</div>
+
+<!-- ============ SLIDE VIEWER MODAL ============ -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>
+        <i class="fas fa-presentation"></i>
+        <span id="modalTitle">Module</span>
+        <span class="counter" id="modalCounter">0 / 0</span>
+      </h3>
+      <div class="modal-actions">
+        <button class="modal-btn" onclick="toggleFullscreen()" id="fsBtn">
+          <i class="fas fa-expand"></i> Fullscreen
+        </button>
+        <button class="modal-btn" onclick="closeViewer()">
+          <i class="fas fa-times"></i> Close
+        </button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <img id="modalImg" src="" alt="Slide">
+    </div>
+    <div class="modal-controls">
+      <button id="prevBtn" onclick="prevSlide()" disabled>
+        <i class="fas fa-chevron-left"></i> Prev
+      </button>
+      <span id="modalCounter2">0 / 0</span>
+      <button id="nextBtn" onclick="nextSlide()" disabled>
+        Next <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SCRIPTS ============ -->
+<script src="data.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
